@@ -1,0 +1,60 @@
+# TIC TAC TOE
+def printboard(xstate,ystate):
+    one_one= "X" if xstate[0][0] else ( "O" if ystate[0][0] else 0)
+    one_two= "X" if xstate[0][1] else ("O" if ystate[0][1] else 1)
+    one_three= "X" if xstate[0][2] else ("O" if ystate[0][2] else 2)
+    two_one= "X" if xstate[1][0] else ("O" if ystate[1][0] else 3)
+    two_two= "X" if xstate[1][1] else ("O" if ystate[1][1] else 4)
+    two_three= "X" if xstate[1][2] else ("O" if ystate[1][2] else 5)
+    three_one= "X" if xstate[2][0] else ("O" if ystate[2][0] else 6)
+    three_two= "X" if xstate[2][1] else ("O" if ystate[2][1] else 7)
+    three_three= "X" if xstate[2][2] else ("O" if ystate[2][2] else 8)
+
+    print(f"{one_one} | {one_two} | {one_three} ")
+    print(f"{two_one} | {two_two} | {two_three} ")
+    print(f"{three_one} | {three_two} | {three_three} ")
+
+def check_win(xstate, ystate):
+    for i in range(3):
+        if all(xstate[i][j] for j in range(3)) or all(xstate[j][i] for j in range(3)):
+            return 1
+        if all(ystate[i][j] for j in range(3)) or all(ystate[j][i] for j in range(3)):
+            return 0
+    if all(xstate[i][i] for i in range(3)) or all(xstate[i][2 - i] for i in range(3)):
+        return 1
+    if all(ystate[i][i] for i in range(3)) or all(ystate[i][2 - i] for i in range(3)):
+        return 0
+    xcount = sum(row.count(1) for row in xstate)
+    ycount = sum(row.count(1) for row in ystate)
+    if xcount + ycount == 9:
+        return 2
+
+    return None
+xstate=[[0 for i in range(3)] for j in range(3)]
+ystate=[[0 for i in range(3)] for j in range(3)]
+turn=1
+print("START")
+while(True):
+  printboard(xstate,ystate)
+  if turn==1:
+    print("X chance")
+    row=int(input("Enter row :"))
+    col=int(input("Enter col :"))
+    xstate[row][col]=1
+  else:
+    print("O chance")
+    row=int(input("Enter row :"))
+    col=int(input("Enter col :"))
+    ystate[row][col]=1
+
+  cwin = check_win(xstate,ystate)
+  if(cwin == 1):
+      print("X WON")
+      break
+  if(cwin ==0):
+      print("Y WON")
+      break
+  if(cwin ==2):
+      print("DRAW")
+      break
+  turn=1-turn
